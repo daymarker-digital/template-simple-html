@@ -1,11 +1,83 @@
-@import "base.scss";
-
 /*
 ==============================================================================================
-MASTER TYPROGRAPHY
+MASTER LAYOUT STYLES :: TYPOGRAPHY :: [ TYPOGRAPHY.SCSS ]
 ==============================================================================================
 */
 
 body {
-	font-size: 12px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
 }
+
+p, li {
+	font-size: 16px;
+	line-height: 160%;
+	font-weight: 100;
+  	color: #000;
+}
+
+p, ul {
+	margin: 0px 0px 15px 0px;
+}
+
+p:last-child, 
+ul > li:last-child {
+	margin: 0px;
+}
+
+ul, li {
+	list-style: none;
+	font-size: .1px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Roboto Slab', serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+a:hover,
+a:active {
+	text-decoration: none;
+	outline: none;
+}
+
+@media only screen and ( min-width: 500px ) {
+
+} /* min 500px */
+
+@media only screen and ( min-width: 768px ) {
+	
+	p, li {
+        font-size: 18px;
+    }
+	
+  	p, ul {
+        margin: 0px 0px 18px 0px;
+    }
+
+} /* min 768px */
+
+@media only screen and ( min-width: 992px ) {
+	
+	p, li {
+		font-size: 15px;
+	}
+  
+    p, ul {
+        margin: 0px 0px 15px 0px;
+    }
+
+} /* min 992px */
+
+@media only screen and ( min-width: 1200px ) {
+	
+	p, li {
+		font-size: 19px;
+	}
+  
+  	p, ul {
+        margin: 0px 0px 19px 0px;
+    }
+
+} /* min 1200px */

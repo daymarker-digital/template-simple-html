@@ -1,23 +1,4 @@
+@import "reset.scss";
+@import "utility.scss";
 @import "typography.scss";
-
-/*
-==============================================================================================
-MASTER LAYOUT :: INDEX :: #MAIN
-==============================================================================================
-*/
-
-#main.index {
-	
-	p {
-		color: red;
-	}
-	
-	@include opacity(0.8);
-	
-	@extend %clearfix;
-	
-}
-
-.price {
-    @extend %currency;
-}
+@import "push-menus.scss";
