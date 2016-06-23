@@ -33,7 +33,7 @@ LOADED
 function loaded() {
 	
 	// loading screen
-	//Daymarker.loadingScreen( $("#loading-screen") ); // loading screen
+	Daymarker.load.screen( $("#loading-screen") ); // loading screen
 				
 } // loaded()
 
@@ -78,6 +78,32 @@ var Daymarker = {
 	// author credentials
 	author : "Daymarker Digital",
 	
+	// page load related functions
+	load : {
+		
+		screen : function( $loadingScreen ) {
+			
+			var loadingScreen = $loadingScreen;
+		
+			if ( loadingScreen.length ) {
+				
+				loadingScreen.addClass("loaded");
+				
+				loadingScreen.one("webkitTransitionEnd otransitionend oTransitionEnd MSTransitionEnd transitionend", function(event) {
+					$("body").addClass("loading-complete");
+					$(this).remove();
+				});
+				
+			} else {
+				
+				console.log("Daymarker.load.screen() Error : '#loading-screen' does not exist!");
+								
+			} // end if else
+				
+		} // screen()
+		
+	},
+	
 	// cookies related functions
 	cookies : {
 		
@@ -94,9 +120,7 @@ var Daymarker = {
 				var expires = "; expires=" + date.toGMTString();
 			}
 			
-			else {
-				var expires = "";
-			}
+			else var expires = "";
 			
 			document.cookie = $name + "=" + $value + expires + "; path=/";
 			
@@ -254,17 +278,6 @@ var Daymarker = {
 		
 	},
 	
-	// loading animation on page load
-	loadingScreen : function( $loadingScreen ){
-		
-		$loadingScreen.addClass("loaded");
-			
-		$loadingScreen.one("webkitTransitionEnd otransitionend oTransitionEnd MSTransitionEnd transitionend", function(event) {
-			$("body").addClass("loading-complete");
-			$(this).remove();
-		});
-				
-	},
 	
 	// push menus
 	pushMenu : function( $trigger ){
@@ -306,7 +319,211 @@ var Daymarker = {
 		
 	},
 	
-	// Shopify specific functions
+	// form functions
+	forms : {
+	
+		// validate $form
+		validate : function( $form ) {
+					
+			// vars
+			var phoneRegEx = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+			var emailRegEx = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+		
+			// triggers
+			$form.on("click", "input[type=submit]", function(event){
+				
+				if ( formValidated() ) {
+					
+					$(this).submit();
+					console.log("Form is Valid - Testing Mode");
+				
+				} else {
+					
+					event.preventDefault();
+					console.log("Form is NOT Valid - Testing Mode");
+					
+				}
+				
+				function formValidated(){
+					
+					var inputValue, inputLabel;
+					var inputResultsArray = [];
+					var inputCount = 0;
+					var validInput = false;
+					var fieldsValidated = false;
+				
+					$(".required-field").each(function(){
+											
+						inputValue = $(this).find("input").val();
+						inputLabel = $(this).find("label").text();
+						
+						// if fiels is email
+						if ( $(this).hasClass("email") ) { // if input type 'email' 
+							
+							validInput = emailRegEx.test(inputValue);
+							
+						}
+						
+						 // if input type 'tel'
+						if ( $(this).hasClass("phone") ) {
+							
+							validInput = phoneRegEx.test(inputValue);
+							
+						}
+						
+						// if input type 'text'
+						if ( $(this).hasClass("text") ) { 
+							
+							if ( inputValue.length > 0 ) {
+								
+								validInput = true;
+								
+							} else {
+								
+								validInput = false;
+								
+							}
+							
+						} 
+						
+						// if input type 'textarea'
+						if ( $(this).hasClass("textarea") ) {
+							
+							inputValue = $.trim( $(this).find("textarea").val() );
+													
+							if ( inputValue.length > 0 ) {
+								
+								validInput = true;
+								
+							} else {
+								
+								validInput = false;
+								
+							}
+							
+						}
+						
+						// if input type 'select'
+						if ( $(this).hasClass("select") ) { 
+													
+							inputValue = $(this).find("select").val();
+							
+							if ( inputValue.length > 0 ) {
+								
+								validInput = true;
+								
+							} else {
+								
+								validInput = true;
+								
+							}
+													
+						}
+	
+						// if input is valid
+						if ( validInput ) {
+							
+							$(this).removeClass("error");
+							$(this).find(".error-message").fadeOut(550, "easeOutBack" );
+							inputResultsArray[inputCount] = { "label" : "" + inputLabel + "" , "result" : inputValue, "isValid" : true }; 
+													
+						} else {
+							
+							$(this).addClass("error");
+							$(this).find(".error-message").fadeIn(1200, "easeOutBack" );
+							inputResultsArray[inputCount] = { "label" : "" + inputLabel + "" , "result" : inputValue, "isValid" : false }; 
+							
+						}
+						
+						inputCount++;
+						
+					}); // each '.required-field'			
+	
+					console.log("InputResults are : [");
+					
+					$.each(inputResultsArray, function(index, val) {
+					    console.log( "Input No. : " + index + "\nLabel : " + val.label + "\nResult : " + val.result + "\nValid : " + val.isValid );				   				    
+					});
+					
+					console.log("\n]");
+					
+					$.each(inputResultsArray, function(index, val) {
+						
+					   if ( val.isValid === true ) {
+						    // do nothing
+							fieldsValidated = true;
+							$(".form-warning-summary").removeClass("error");
+							return true;
+						    
+					    } else {
+						    
+						    fieldsValidated = false;
+						    $(".form-warning-summary").addClass("error");
+						    return false;
+						    
+					    }
+					   				    
+					});
+								
+					return fieldsValidated;
+					
+				} // validateFields()
+				
+			}); // on click
+										
+		}, // validate( $form )
+		
+		customize : function ( $form ) {
+					
+			var errorMessage;
+		
+			if ( $form.length > 0 ) {
+			
+				$form.find("ul").append("<li class='submit'><input type='submit' value='Submit'></li>");
+			
+				$form.find(".required-field").each(function(){
+				 
+					if ( $(this).hasClass("email") ) { // if input type 'email' 
+								
+						errorMessage = "Please enter a valid email address";					
+											
+					} // if fiels is email
+										
+					if ( $(this).hasClass("phone") ) { // if input type 'tel'
+						
+						errorMessage = "Please enter a valid phone number";					
+											
+					} // if field is phone
+										
+					if ( $(this).hasClass("text") ) { // if input type 'text'
+						
+						errorMessage = "This field cannot be blank";							
+											
+					} // if field is text or textarea
+										
+										
+					if ( $(this).hasClass("textarea") ) { // if input type 'text'
+						
+						errorMessage = "This field cannot be blank";					
+											
+					} // if field is text or textarea
+										
+					if ( $(this).hasClass("select") ) { // if input type 'text'
+																	
+											
+					} // if field is text or textarea
+					
+					$(this).append("<div class='error-message'><p>" + errorMessage + "</p></div>");
+				 
+				}); // add custom error message to each 'required-field'
+			
+			} // if form exists
+		
+		} // customize ( $form )
+			
+	},
+	
+	// Shopify functions
 	shopify : {
 		
 		cart : {
@@ -391,64 +608,64 @@ var Daymarker = {
 				var buyNowButton = $("button.buy-now");
 				var itemVariantID, itemVariantPrice, itemVariantTitle, itemVariantAvailable, itemVariantType;
 				var quantity = 1;
-
+			
 				buyNowButton.on("click", function(event) { 
-					
+								
 					var $thisButton = $(this);
-					
+								
 					if ( $thisButton.hasClass("ajax") ) {
-						
+									
 						// FANCY ADD TO CART
 						itemVariantID = $(this).data("details").variantID;
 						itemVariantPrice = $(this).data("details").price;
 						itemVariantTitle = $(this).data("details").variantName;
 						itemVariantAvailable = $(this).data("details").variantAvailable;
 						itemVariantType = $(this).data("details").variantType;
-						
+									
 						// add variant and quantity to cart      
 						CartJS.addItem( itemVariantID, quantity, {}, {
-
+			
 							"success": function(data, textStatus, jqXHR) {
 								buttonUpdate();
-			                },
-              
-			                "error": function(jqXHR, textStatus, errorThrown) {
+							},
+			              
+							"error": function(jqXHR, textStatus, errorThrown) {
 								console.log('Error: ' + errorThrown + '!');
 							}
-
+			
 						}); // CartJS.addItem()
-						
+									
 						function buttonUpdate() {
-            	
+			            	
 							$thisButton.text( "Added to Cart!" ).addClass( "added-to-cart" );
 							$("#header").addClass( "updated" );
-			              
-			                setTimeout(resetButton, 1200);
-			
-			                function resetButton(){
-			
+						              
+						    setTimeout(resetButton, 1200);
+						
+						    function resetButton(){
+						
 								$thisButton.text( "Buy " + itemVariantTitle ).removeClass( "added-to-cart" );
 								$("#header").removeClass( "updated" );
-			                 	  
+						                 	  
 							} // resetButton()
-              
+			              
 						} // buttonUpdate()
-
+			
 					} else {
-						
+									
 						// REGULAR ADD TO CART
-						
+									
 					}
-										
-				} // on 'click'
-				
+													
+				}); // on 'click'
+							
 			} // addTo()
 			
-		} // cart()
+		}
 		
-	} // shopify
-	
-}; // Daymarker Theme Javascript Object
+	}
+				
+} // Daymarker Theme Javascript Object
 
 /*
 ==============================================================================================

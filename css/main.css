@@ -1,101 +1,148 @@
 /*
-*
-*	Theme Name: Daymarker Skeleton Theme
-*	Author: Daymarker Digital
-*	Info: Main Styles
-*
+==============================================================================================
+UTILITY STYLES :: BASE.SCSS
+==============================================================================================
 */
+#main.index {
+  *zoom: 1; }
+  #main.index:before, #main.index:after {
+    content: " ";
+    display: table; }
+  #main.index:after {
+    clear: both; }
+
+.price {
+  position: relative; }
+  .price:before {
+    content: '$';
+    position: relative;
+    left: 0; }
+
+.USD .price:before {
+  content: '$'; }
+
+.EUR .price:before {
+  content: '\20AC'; }
+
+.ILS .price:before {
+  content: '\20AA'; }
+
+.GBP .price:before {
+  content: '\00A3'; }
 
 /*
 ==============================================================================================
-MASTER NAVIGATION :: PUSH NAVIGATION
+UTILITY STYLES :: BASE.SCSS
 ==============================================================================================
 */
+.vertical-center {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%); }
 
-@media only screen and ( min-width: 500px ) {
+.cover.background-image {
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
 
-} /* min 500px */
+a:hover, a:focus {
+  text-decoration: none; }
 
-@media only screen and ( min-width: 768px ) {
+/* Animations */
+a,
+button,
+.js-match-viewport-height {
+  -webkit-transition: all 240ms ease-in-out;
+  -moz-transition: all 240ms ease-in-out;
+  -ms-transition: all 240ms ease-in-out;
+  -o-transition: all 240ms ease-in-out;
+  transition: all 240ms ease-in-out;
+  -webkit-backface-visibility: hidden; }
 
-} /* min 768px */
+/* Buttons */
+button {
+  padding: 12px 20px;
+  display: inline-block;
+  width: auto;
+  text-align: center;
+  border: none;
+  outline: none; }
 
-@media only screen and ( min-width: 992px ) {
+/* Embedded Media */
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto; }
 
-} /* min 992px */
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
 
-@media only screen and ( min-width: 1200px ) {
+.embed-container .soundHeader__title {
+  display: none; }
 
-} /* min 1200px */
+.display-none {
+  display: none !important; }
+
+.mobile-only {
+  display: inline-block !important; }
+
+.smartphone-only {
+  display: inline-block !important; }
+
+.tablet-only {
+  display: none !important; }
+
+.desktop-only {
+  display: none !important; }
+
+/* min 500px */
+@media only screen and (min-width: 768px) {
+  .smartphone-only {
+    display: none !important; }
+
+  .tablet-only {
+    display: inline-block !important; } }
+/* min 768px */
+@media only screen and (min-width: 992px) {
+  .mobile-only,
+  .tablet-only {
+    display: none !important; }
+
+  .desktop-only {
+    display: inline-block !important; } }
+/* min 992px */
+/* min 1200px */
+/*
+==============================================================================================
+MASTER TYPROGRAPHY
+==============================================================================================
+*/
+body {
+  font-size: 12px; }
 
 /*
 ==============================================================================================
-MASTER LAYOUT :: GENERAL
+MASTER LAYOUT :: INDEX :: #MAIN
 ==============================================================================================
 */
-
-.favourite-songs-list > li {
-	width: 100%;
-	margin: 0px 0px 30px 0px;
-}
-
-.favourite-songs-list > li:last-child {
-	margin: 0px;
-}
-
-@media only screen and ( min-width: 500px ) {
-
-} /* min 500px */
-
-@media only screen and ( min-width: 768px ) {
-
-} /* min 768px */
-
-@media only screen and ( min-width: 992px ) {
-
-} /* min 992px */
-
-@media only screen and ( min-width: 1200px ) {
-
-} /* min 1200px */
-
-
-/*
-==============================================================================================
-MASTER LAYOUT :: HEADER
-==============================================================================================
-*/
-
-/*
-==============================================================================================
-MASTER LAYOUT :: HOME
-==============================================================================================
-*/
-
-/*
-==============================================================================================
-MASTER LAYOUT :: POSTS 
-==============================================================================================
-*/
-
-/*
-==============================================================================================
-MASTER LAYOUT :: SINGLE POST
-==============================================================================================
-*/
-
-/*
-==============================================================================================
-MASTER LAYOUT :: FOOTER
-==============================================================================================
-*/
-
-#footer {
-	text-align: center;
-}
-
-/*
-==============================================================================================
-MASTER LAYOUT :: 404
-==============================================================================================
-*/
+#main.index {
+  opacity: 0.8;
+  filter: alpha(opacity=80); }
+  #main.index p {
+    color: red; }
